@@ -1,25 +1,27 @@
 const { Sequelize } = require('sequelize');
 
-// สร้างการเชื่อมต่อกับฐานข้อมูล
-const sequelize = new Sequelize('verceldb', 'default', 'dYFbGiPfr4B8', {
-  host: 'ep-divine-pond-a152la6y.ap-southeast-1.aws.neon.tech',
+// ตั้งค่าการเชื่อมต่อกับฐานข้อมูล PostgreSQL
+const sequelize = new Sequelize('postgres://default:9SVmkWx5AgdR@ep-floral-glade-a1r9ak9g.ap-southeast-1.aws.neon.tech:5432/verceldb', {
   dialect: 'postgres',
-  port: 5432,
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false, // ปรับเป็น true ถ้าคุณต้องการตรวจสอบใบรับรอง SSL
+      rejectUnauthorized: false,
     },
   },
+  logging: false,
 });
 
-// ตรวจสอบการเชื่อมต่อ
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// ฟังก์ชันสำหรับตรวจสอบการเชื่อมต่อกับฐานข้อมูล
+const connectDB = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Database connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+};
+
+connectDB();
 
 module.exports = sequelize;
