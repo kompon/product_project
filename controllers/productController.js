@@ -2,12 +2,13 @@ const Product = require('../models/product');
 
 exports.createProduct = async (req, res) => {
     try {
-        const { proname, price } = req.body;
+        const { proname, price, authors } = req.body; // เพิ่ม authors
         const image_file_name = req.file ? req.file.filename : null;
 
         const product = await Product.create({
             proname: proname,
             image: image_file_name,
+            authors: authors, // เก็บ authors
             price: price
         });
 
@@ -42,7 +43,7 @@ exports.deleteProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
     try {
-        const { proname, price } = req.body;
+        const { proname, price, authors } = req.body; // เพิ่ม authors
         const image_file_name = req.file ? req.file.filename : null;
 
         const product = await Product.findByPk(req.params.proId);
@@ -53,6 +54,7 @@ exports.updateProduct = async (req, res) => {
         await product.update({
             proname: proname,
             image: image_file_name,
+            authors: authors, // เก็บ authors
             price: price
         });
         res.json(product);

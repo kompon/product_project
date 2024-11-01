@@ -16,12 +16,16 @@ const Product = sequelize.define('Product', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    authors: { // เพิ่ม authors
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     price: {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
 }, {
-    tableName: 'products',
+    tableName: 'Products', // ใช้ชื่อ Products
 });
 
 module.exports = Product;
